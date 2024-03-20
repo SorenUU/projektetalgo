@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
 
 public class WeatherDataHandler {
@@ -16,9 +17,10 @@ public class WeatherDataHandler {
 		for (String line : fileData) { // 0(n)
 			String[] parts = line.split(";"); // 0(1)
 			LocalDate date = LocalDate.parse(parts[0]); // 0(1)
+			LocalTime time = LocalTime.parse(parts[1]); // 0(1)
 			double temperature = Double.parseDouble(parts[2]); // 0(1)
 			boolean confirmed = parts[3].equals("G");  // 0(1)
-			WeatherMeasurement measurement = new WeatherMeasurement(date, temperature, confirmed); // 0(1)
+			WeatherMeasurement measurement = new WeatherMeasurement(date, time, temperature, confirmed);
 
 			weatherData.computeIfAbsent(date, k -> new ArrayList<>()).add(measurement);// 0(1)
 
